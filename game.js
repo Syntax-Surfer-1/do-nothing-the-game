@@ -14,7 +14,7 @@ class DoNothingGame {
     this.countdownTimer = null;
     this.username = localStorage.getItem('username') || null;
     this.userId = localStorage.getItem('user_id') || null;
-
+    
     if (!this.userId) {
       this.userId = crypto.randomUUID();
       localStorage.setItem('user_id', this.userId);
