@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Do Nothing: The Game</title>
+
+  <!-- Link to external CSS -->
+  <link rel="stylesheet" href="style.css"/>
+
+  <!-- Supabase SDK -->
+  <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js"></script>
+</head>
+<body>
+
+  
+  <!-- Animated Background -->
+  <div class="background"></div>
+  <div class="particles" id="particles"></div>
+
+  <!-- High Score -->
+  <div class="high-score hidden" id="high-score">
+    <div class="high-score-label">Best Score</div>
+    <div class="high-score-value" id="high-score-value">0.0s</div>
+  </div>
+
+  <div class="container">
+    <!-- Menu -->
+    <div id="menu-screen">
+      <h1>Do Nothing</h1>
+      <div class="subtitle">The Ultimate Test of Self-Control</div>
+      <button class="btn" id="start-btn">Start Game</button>
+      <button class="btn" id="leaderboard-btn">Leaderboard</button>
+      <div class="fullscreen-hint">Game will enter fullscreen mode</div>
+    </div>
+
+    <!-- Countdown -->
+    <div id="countdown-screen" class="hidden">
+      <h1>Do Nothing</h1>
+      <div class="countdown" id="countdown">3</div>
+    </div>
+
+    <!-- Game Screen -->
+    <div id="game-screen" class="hidden">
+      <div class="instruction">Don't touch anything...</div>
+      <div class="timer" id="timer">0.0s</div>
+    </div>
+
+    <!-- Game Over -->
+    <div id="game-over-screen" class="hidden">
+      <div class="game-over">
+        <div class="skull">💀</div>
+        <div class="game-over-text">You Did Something.</div>
+        <div class="survival-time" id="survival-time">You survived for 0.0 seconds</div>
+        <button class="btn" id="try-again-btn">Try Again</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- Link to external JS -->
+  <script src="game.js"></script>
+</body>
+</html>
