@@ -31,8 +31,8 @@ A fun and ironic game where the goal is to do... absolutely nothing! Try to surv
 ### 1. Clone the Repository
 
 ```bash
-git clone https://github.com/your-username/do-nothing-game.git
-cd do-nothing-game
+git clone https://github.com/Syntax-Surfer-1/do-nothing-the-game.git
+cd do-nothing-the-game
 ````
 
 ### 2. Configure Supabase
