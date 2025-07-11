@@ -1,6 +1,6 @@
 // ✅ 1. Initialize Supabase Correctly
 const SUPABASE_URL = 'https://hehapncfqigzplnmcxbt.supabase.co';
-const SUPABASE_ANON_KEY = ''; // truncated for safety
+const SUPABASE_ANON_KEY = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImhlaGFwbmNmcWlnenBsbm1jeGJ0Iiwicm9sZSI6ImFub24iLCJpYXQiOjE3NTIyMjEyNzgsImV4cCI6MjA2Nzc5NzI3OH0.P59FDATp91SSOZpF1BV34IUCpSK5S69JlUOKJZuVbhY'; // truncated for safety
 const supabaseClient = supabase.createClient(SUPABASE_URL, SUPABASE_ANON_KEY);
 
 // ✅ 2. Game Class
@@ -46,16 +46,10 @@ class DoNothingGame {
   }
 
   promptUsername() {
-  let name = '';
-  while (!name || name.trim().length < 3) {
-    name = prompt('Enter your name for the leaderboard (min 3 characters):', '')?.trim();
-    if (!name) alert('Name is required!');
-    else if (name.length < 3) alert('Name must be at least 3 characters.');
+    const name = prompt('Enter your name for the leaderboard:', 'Anonymous') || 'Anonymous';
+    this.username = name;
+    localStorage.setItem('username', name);
   }
-  this.username = name;
-  localStorage.setItem('username', name);
-  }
-
 
   createParticles() {
     const particlesContainer = document.getElementById('particles');
@@ -192,16 +186,12 @@ class DoNothingGame {
       .single();
 
     if (!existing || score > existing.score) {
-      await fetch('/api/submit-score', {
-  method: 'POST',
-  headers: { 'Content-Type': 'application/json' },
-  body: JSON.stringify({
-    id: this.userId,
-    name: this.username,
-    score: score
-  })
-});
-
+      await supabaseClient
+        .from('scores')
+        .upsert(
+          { id: this.userId, name: this.username, score },
+          { onConflict: 'id' }
+        );
     }
 
     this.showScreen('game-over');
@@ -235,10 +225,13 @@ class DoNothingGame {
   }
 
   async fetchLeaderboard() {
-    const res = await fetch('/api/leaderboard');
-    const data = await res.json();
+    const { data, error } = await supabaseClient
+      .from('scores')
+      .select('*')
+      .order('score', { ascending: false })
+      .limit(10);
 
-    if (res.status !== 200) return alert('Failed to fetch leaderboard.');
+    if (error) return alert('Failed to fetch leaderboard.');
 
     const div = document.createElement('div');
     div.className = 'notification success';
