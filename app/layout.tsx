@@ -4,9 +4,9 @@ import { Analytics } from '@vercel/analytics/react'
 import { SpeedInsights } from '@vercel/speed-insights/next'
 
 export const metadata: Metadata = {
-  title: 'v0 App',
-  description: 'Created with v0',
-  generator: 'v0.dev',
+  title: 'Do-Nothing:The Game',
+  description: 'Created by Syntax-Surfer, this is a game where the objective is to do nothing.',
+  generator: 'Syntax-Surfer',
 }
 
 export default function RootLayout({
